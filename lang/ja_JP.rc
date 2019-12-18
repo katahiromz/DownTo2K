@@ -10,25 +10,28 @@ LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
 
 IDD_MAIN DIALOG 0, 0, 340, 210
 CAPTION "Windows 2000 を入手する"
-STYLE DS_MODALFRAME | WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX
+STYLE DS_CENTER | DS_MODALFRAME | WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX
 FONT 12, "MS UI Gothic"
 {
-    LTEXT "≡", stc1, 5, 5, 20, 17
-    CONTROL "<a>win2000j.com で詳細を見る</a>", stc1, "SysLink", 0, 226, 10, 106, 11
-    CONTROL "", IDC_STATIC, "STATIC", SS_ETCHEDFRAME | WS_GROUP, 22, 40, 299, 86
-    CONTROL "", IDC_STATIC, "STATIC", SS_BITMAP, 22, 40, 12, 85
-    CONTROL 1085, stc3, "STATIC", SS_BITMAP | WS_GROUP, 40, 50, 0, 0
-    LTEXT "Microsoft では Windows 2000 へのダウングレードをお勧めしています", IDC_STATIC, 67, 51, 230, 18
-    LTEXT "Windows 2000へのダウングレードは期間限定です。", IDC_STATIC, 70, 77, 171, 12
-    PUSHBUTTON "今すぐダウングレード", psh1, 48, 104, 93, 16
-    PUSHBUTTON "今夜ダウングレード", psh2, 149, 104, 101, 16
-    CONTROL "<a>時刻を指定</a>", stc2, "SysLink", 0, 259, 106, 42, 11
-    LTEXT "・この PC は互換性がある気がします", IDC_STATIC, 55, 132, 135, 20
-    LTEXT "・ファイルがクリーンアップされます", IDC_STATIC, 55, 160, 135, 20
-    LTEXT "・今まで通り操作でき、高速でさらに安全に", IDC_STATIC, 193, 132, 135, 20
-    LTEXT "・ウイルス対策機能はありませんがきっと大丈夫です", IDC_STATIC, 193, 160, 135, 20
-    ICON 1085, IDC_STATIC, 20, 143, 0, 0
-    CONTROL 1090, IDC_STATIC, "STATIC", SS_BITMAP, 2, 185, 87, 23
+    LTEXT "≡", stc1, 5, 5, 20, 15
+    CONTROL "<a>win2000j.com で詳細を見る</a>", stc2, "SysLink", WS_TABSTOP, 225, 10, 105, 10
+    CONTROL "", IDC_STATIC, "STATIC", SS_ETCHEDFRAME, 20, 20, 300, 105
+    CONTROL "", stc10, "STATIC", SS_REALSIZEIMAGE | SS_CENTERIMAGE | SS_BITMAP, 21, 21, 10, 103
+    CONTROL "", stc3, "STATIC", SS_REALSIZEIMAGE | SS_CENTERIMAGE | SS_BITMAP, 37, 25, 35, 35
+    LTEXT "Microsoft では Windows 2000 へのダウングレードをお勧めしています", stc11, 80, 30, 215, 20
+    LTEXT "Windows 2000へのダウングレードは期間限定です。", IDC_STATIC, 70, 75, 170, 10
+    PUSHBUTTON "今すぐダウングレード", psh1, 50, 105, 95, 15
+    PUSHBUTTON "今夜ダウングレード", psh2, 150, 105, 100, 15
+    CONTROL "<a>時刻を指定</a>", stc4, "SysLink", WS_TABSTOP, 260, 105, 40, 10
+    CONTROL "", stc5, "STATIC", SS_REALSIZEIMAGE | SS_CENTERIMAGE | SS_BITMAP, 30, 130, 20, 20
+    LTEXT "この PC は互換性がある気がします", IDC_STATIC, 55, 130, 100, 20
+    CONTROL "", stc6, "STATIC", SS_REALSIZEIMAGE | SS_CENTERIMAGE | SS_BITMAP, 30, 160, 20, 20
+    LTEXT "ファイルがクリーンアップされます", IDC_STATIC, 55, 160, 100, 20
+    CONTROL "", stc7, "STATIC", SS_REALSIZEIMAGE | SS_CENTERIMAGE | SS_BITMAP, 170, 130, 20, 20
+    LTEXT "今まで通り操作でき、高速でさらに安全に", IDC_STATIC, 195, 130, 100, 20
+    CONTROL "", stc8, "STATIC", SS_REALSIZEIMAGE | SS_CENTERIMAGE | SS_BITMAP, 170, 160, 20, 20
+    LTEXT "ウイルス対策機能はありませんがきっと大丈夫です", IDC_STATIC, 195, 160, 100, 20
+    CONTROL "", stc9, "STATIC", SS_REALSIZEIMAGE | SS_CENTERIMAGE | SS_BITMAP, 0, 185, 85, 25
 }
 
 //////////////////////////////////////////////////////////////////////////////

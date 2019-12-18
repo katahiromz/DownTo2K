@@ -70,18 +70,88 @@ DoLoadBitmapFromRes(HINSTANCE hInst, LPCWSTR pszType, LPCWSTR pszName)
     return hbm;
 }
 
+HBITMAP CreateResizedBitmapForCtrl(HWND hwndCtrl, HBITMAP hbm)
+{
+    RECT rc;
+    GetClientRect(hwndCtrl, &rc);
+
+    SIZE siz;
+    siz.cx = rc.right - rc.left;
+    siz.cy = rc.bottom - rc.top;
+
+    return (HBITMAP)CopyImage(hbm, IMAGE_BITMAP, siz.cx, siz.cy, LR_CREATEDIBSECTION);
+}
+
+static HBITMAP s_hbmCheckmark;
+static HBITMAP s_hbmCheckmarkResized;
+static HBITMAP s_hbmMicrosoft;
+static HBITMAP s_hbmWin2KPro;
+static HBITMAP s_hbmWin2KProResized;
+static HBITMAP s_hbmWinFlag;
+static HFONT s_hBigFont;
 BOOL InitInstance(HWND hwnd, HINSTANCE hInst)
 {
+    s_hbmCheckmark = DoLoadBitmapFromRes(hInst, L"PNG", MAKEINTRESOURCEW(IDR_PNG_CHECKMARK));
+
+    HWND hStc5 = GetDlgItem(hwnd, stc5);
+    s_hbmCheckmarkResized = CreateResizedBitmapForCtrl(hStc5, s_hbmCheckmark);
+
+    s_hbmMicrosoft = DoLoadBitmapFromRes(hInst, L"PNG", MAKEINTRESOURCEW(IDR_PNG_MICROSOFT));
+
+    s_hbmWin2KPro = DoLoadBitmapFromRes(hInst, L"PNG", MAKEINTRESOURCEW(IDR_PNG_WIN2KPRO));
+
+    HWND hStc10 = GetDlgItem(hwnd, stc10);
+    s_hbmWin2KProResized = CreateResizedBitmapForCtrl(hStc10, s_hbmWin2KPro);
+
+    s_hbmWinFlag = DoLoadBitmapFromRes(hInst, L"PNG", MAKEINTRESOURCEW(IDR_PNG_WINFLAG));
+
+    HWND hStc11 = GetDlgItem(hwnd, stc11);
+    HFONT hFont = GetWindowFont(hwnd);
+    LOGFONTW lf;
+    GetObjectW(hFont, sizeof(lf), &lf);
+
+    lf.lfHeight *= 4;
+    lf.lfHeight /= 3;
+    lf.lfWeight = FW_BOLD;
+    s_hBigFont = CreateFontIndirectW(&lf);
+
+    SetWindowFont(hStc11, s_hBigFont, TRUE);
+
     return TRUE;
 }
 
 void ExitInstance(void)
 {
+    DeleteObject(s_hbmCheckmark);
+    s_hbmCheckmark = NULL;
+
+    DeleteObject(s_hbmCheckmarkResized);
+    s_hbmCheckmarkResized = NULL;
+
+    DeleteObject(s_hbmWin2KPro);
+    s_hbmWin2KPro = NULL;
+
+    DeleteObject(s_hbmWin2KProResized);
+    s_hbmWin2KProResized = NULL;
+
+    DeleteObject(s_hBigFont);
+    s_hBigFont = NULL;
 }
 
 BOOL OnInitDialog(HWND hwnd, HWND hwndFocus, LPARAM lParam)
 {
     InitInstance(hwnd, s_hInst);
+
+    SendDlgItemMessageW(hwnd, stc5, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)s_hbmCheckmarkResized);
+    SendDlgItemMessageW(hwnd, stc6, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)s_hbmCheckmarkResized);
+    SendDlgItemMessageW(hwnd, stc7, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)s_hbmCheckmarkResized);
+    SendDlgItemMessageW(hwnd, stc8, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)s_hbmCheckmarkResized);
+
+    SendDlgItemMessageW(hwnd, stc9, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)s_hbmMicrosoft);
+
+    SendDlgItemMessageW(hwnd, stc10, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)s_hbmWin2KProResized);
+    SendDlgItemMessageW(hwnd, stc3, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)s_hbmWinFlag);
+
     return TRUE;
 }
 
@@ -96,6 +166,11 @@ void OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
     }
 }
 
+HBRUSH OnCtlColor(HWND hwnd, HDC hdc, HWND hwndChild, int type)
+{
+    return GetStockBrush(WHITE_BRUSH);
+}
+
 INT_PTR CALLBACK
 DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -103,6 +178,9 @@ DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
         HANDLE_MSG(hwnd, WM_INITDIALOG, OnInitDialog);
         HANDLE_MSG(hwnd, WM_COMMAND, OnCommand);
+        HANDLE_MSG(hwnd, WM_CTLCOLORSTATIC, OnCtlColor);
+        HANDLE_MSG(hwnd, WM_CTLCOLORDLG, OnCtlColor);
+        HANDLE_MSG(hwnd, WM_CTLCOLORBTN, OnCtlColor);
     }
     return 0;
 }
