@@ -1,0 +1,3 @@
+[submodule "SysLink"]
+	path = SysLink
+	url = https://github.com/katahiromz/SysLink.git

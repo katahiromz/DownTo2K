@@ -1,18 +1,20 @@
 #include <windows.h>
 #include <windowsx.h>
+#include <commctrl.h>
 #include <gdiplus.h>
+#include <cassert>
 #include "resource.h"
 
-LPTSTR MZCAPI LoadStringDx(INT nID)
+LPWSTR LoadStringDx(INT nID)
 {
     static UINT s_index = 0;
     const UINT cchBuffMax = 1024;
-    static TCHAR s_sz[4][cchBuffMax];
+    static WCHAR s_sz[4][cchBuffMax];
 
-    TCHAR *pszBuff = s_sz[s_index];
+    WCHAR *pszBuff = s_sz[s_index];
     s_index = (s_index + 1) % _countof(s_sz);
     pszBuff[0] = 0;
-    if (!::LoadString(NULL, nID, pszBuff, cchBuffMax))
+    if (!::LoadStringW(NULL, nID, pszBuff, cchBuffMax))
         assert(0);
     return pszBuff;
 }
@@ -20,7 +22,7 @@ LPTSTR MZCAPI LoadStringDx(INT nID)
 HBITMAP
 DoLoadBitmapFromRes(HINSTANCE hInst, LPCWSTR pszType, LPCWSTR pszName)
 {
-    HRSRC hRsrc = FindResource(hInst, pszName, pszType);
+    HRSRC hRsrc = FindResourceW(hInst, pszName, pszType);
     if (!hRsrc)
         return NULL;
 
@@ -52,8 +54,8 @@ DoLoadBitmapFromRes(HINSTANCE hInst, LPCWSTR pszType, LPCWSTR pszName)
         pBitmap = Gdiplus::Bitmap::FromStream(pStream);
         if (pBitmap)
         {
-            Gdiplus::ARGB argb = Gdiplus::MakeARGB(0xFF, 0xFF, 0xFF, 0xFF);
-            pBitmap->GetHBITMAP(Gdiplus::Color(argb, &hbm);
+            Gdiplus::Color argb(0xFF, 0xFF, 0xFF, 0xFF);
+            pBitmap->GetHBITMAP(argb, &hbm);
         }
         delete pBitmap;
     }
@@ -68,6 +70,7 @@ DoLoadBitmapFromRes(HINSTANCE hInst, LPCWSTR pszType, LPCWSTR pszName)
 
 BOOL OnInitDialog(HWND hwnd, HWND hwndFocus, LPARAM lParam)
 {
+    return TRUE;
 }
 
 void OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
@@ -94,6 +97,7 @@ DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 BOOL InitInstance(HINSTANCE hInst)
 {
+    return TRUE;
 }
 
 void ExitInstance()
@@ -117,7 +121,7 @@ WinMain(HINSTANCE   hInstance,
 
     InitInstance(hInstance);
     {
-        DialogBox(hInstance, MAKEINTRESOURCE(IDD_MAIN), NULL, DialogProc);
+        DialogBoxW(hInstance, MAKEINTRESOURCEW(IDD_MAIN), NULL, DialogProc);
     }
     ExitInstance();
 

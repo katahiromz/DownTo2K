@@ -42,6 +42,10 @@ endif()
 
 # DownTo2K.exe
 add_executable(DownTo2K WIN32 DownTo2K.cpp DownTo2K_res.rc)
-target_link_libraries(DownTo2K comctl32)
+target_link_libraries(DownTo2K comctl32 gdiplus)
+
+##############################################################################
+
+subdirs(SysLink)
 
 ##############################################################################
