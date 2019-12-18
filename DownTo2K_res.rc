@@ -12,6 +12,13 @@
 LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
 //////////////////////////////////////////////////////////////////////////////
+// RT_MANIFEST
+
+#ifndef MSVC
+1 24 "res/Manifest_1.manifest"
+#endif
+
+//////////////////////////////////////////////////////////////////////////////
 // PNG
 
 IDR_PNG_MICROSOFT PNG "res/Png_100.png"
@@ -19,6 +26,8 @@ IDR_PNG_MICROSOFT PNG "res/Png_100.png"
 IDR_PNG_WINFLAG PNG "res/Png_101.png"
 
 IDR_PNG_WIN2KPRO PNG "res/Png_102.png"
+
+IDR_PNG_CHECKMARK PNG "res/Png_103.png"
 
 //////////////////////////////////////////////////////////////////////////////
 // Languages

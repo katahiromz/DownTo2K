@@ -5,6 +5,8 @@
 #include <cassert>
 #include "resource.h"
 
+static HINSTANCE s_hInst;
+
 LPWSTR LoadStringDx(INT nID)
 {
     static UINT s_index = 0;
@@ -68,8 +70,18 @@ DoLoadBitmapFromRes(HINSTANCE hInst, LPCWSTR pszType, LPCWSTR pszName)
     return hbm;
 }
 
+BOOL InitInstance(HWND hwnd, HINSTANCE hInst)
+{
+    return TRUE;
+}
+
+void ExitInstance(void)
+{
+}
+
 BOOL OnInitDialog(HWND hwnd, HWND hwndFocus, LPARAM lParam)
 {
+    InitInstance(hwnd, s_hInst);
     return TRUE;
 }
 
@@ -95,34 +107,26 @@ DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
-BOOL InitInstance(HINSTANCE hInst)
-{
-    return TRUE;
-}
-
-void ExitInstance()
-{
-}
-
 INT WINAPI
 WinMain(HINSTANCE   hInstance,
         HINSTANCE   hPrevInstance,
         LPSTR       lpCmdLine,
         INT         nCmdShow)
 {
-    HRESULT hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
-
+    HRESULT hr;
     ULONG_PTR gdiplusToken;
+    HINSTANCE hinstSysLink;
+    s_hInst = hInstance;
+
+    hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
+
     Gdiplus::GdiplusStartupInput gdiplusStartupInput;
     Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
     InitCommonControls();
-    HINSTANCE hinstSysLink = LoadLibraryW(L"SysLink.dll");
+    hinstSysLink = LoadLibraryW(L"SysLink");
 
-    InitInstance(hInstance);
-    {
-        DialogBoxW(hInstance, MAKEINTRESOURCEW(IDD_MAIN), NULL, DialogProc);
-    }
+    DialogBoxW(hInstance, MAKEINTRESOURCEW(IDD_MAIN), NULL, DialogProc);
     ExitInstance();
 
     Gdiplus::GdiplusShutdown(gdiplusToken);

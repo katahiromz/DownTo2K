@@ -10,11 +10,12 @@
 #define IDR_PNG_MICROSOFT                   100
 #define IDR_PNG_WINFLAG                     101
 #define IDR_PNG_WIN2KPRO                    102
+#define IDR_PNG_CHECKMARK                   103
 
 #ifdef APSTUDIO_INVOKED
     #ifndef APSTUDIO_READONLY_SYMBOLS
         #define _APS_NO_MFC                 1
-        #define _APS_NEXT_RESOURCE_VALUE    103
+        #define _APS_NEXT_RESOURCE_VALUE    104
         #define _APS_NEXT_COMMAND_VALUE     100
         #define _APS_NEXT_CONTROL_VALUE     1000
         #define _APS_NEXT_SYMED_VALUE       300
