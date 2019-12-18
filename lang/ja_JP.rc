@@ -18,10 +18,10 @@ FONT 12, "MS UI Gothic"
     CONTROL "", IDC_STATIC, "STATIC", SS_ETCHEDFRAME, 20, 20, 300, 105
     CONTROL "", stc10, "STATIC", SS_REALSIZEIMAGE | SS_CENTERIMAGE | SS_BITMAP, 21, 21, 10, 103
     CONTROL "", stc3, "STATIC", SS_REALSIZEIMAGE | SS_CENTERIMAGE | SS_BITMAP, 37, 25, 35, 35
-    LTEXT "Microsoft では Windows 2000 へのダウングレードをお勧めしています", stc11, 80, 30, 215, 20
+    LTEXT "Microsoft では Windows 2000 へのダウングレードをお勧めしています", stc11, 80, 30, 230, 30
     LTEXT "Windows 2000へのダウングレードは期間限定です。", IDC_STATIC, 70, 75, 170, 10
-    PUSHBUTTON "今すぐダウングレード", psh1, 50, 105, 95, 15
-    PUSHBUTTON "今夜ダウングレード", psh2, 150, 105, 100, 15
+    PUSHBUTTON "今すぐダウングレード", psh1, 50, 100, 95, 20
+    PUSHBUTTON "今夜ダウングレード", psh2, 150, 100, 100, 20
     CONTROL "<a>時刻を指定</a>", stc4, "SysLink", WS_TABSTOP, 260, 105, 40, 10
     CONTROL "", stc5, "STATIC", SS_REALSIZEIMAGE | SS_CENTERIMAGE | SS_BITMAP, 30, 130, 20, 20
     LTEXT "この PC は互換性がある気がします", IDC_STATIC, 55, 130, 100, 20
